@@ -3,6 +3,9 @@ name: Create draft release
 on:
   workflow_dispatch: 
 
+permissions:
+  contents: write
+
 env:
   CARGO_TERM_COLOR: always
 
@@ -57,7 +60,7 @@ jobs:
           tag_name: staging-run-${{ github.run_number }}
           name: "Staging Release (Build #${{ github.run_number}})"
           files: |
-            gremlin/gremlin
+            gremlin-linux/gremlin
             gremlin-windows/gremlin.exe
             gremlin-macos/gremlin
           draft: true
