@@ -50,6 +50,12 @@ jobs:
 
       - name: Build
         run: cargo build --release --locked --verbose
+
+      - name: Rename binary
+        shell: bash
+        run: |
+          mkdir -p staging-release
+          cp target/release/gremlin staging-release/gremlin-${{ matrix.os }} || cp target/release/gremlin.exe staging-release/gremlin-${{ matrix.os }}.exe
         
       - name: Upload
         uses: actions/upload-artifact@v4
@@ -73,9 +79,9 @@ jobs:
           tag_name: staging-run-${{ github.run_number }}
           name: "Staging Release (Build #${{ github.run_number}})"
           files: |
-            gremlin-linux/gremlin
-            gremlin-windows/gremlin.exe
-            gremlin-macos/gremlin
+            gremlin-linux/gremlin-ubuntu-latest
+            gremlin-windows/gremlin-windows-lates.exe
+            gremlin-macos/gremlin-macos-latest
           draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
