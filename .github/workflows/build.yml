@@ -1,0 +1,65 @@
+name: Create draft release
+
+on:
+  workflow_dispatch: 
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    name: Build - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            artifact_name: gremlin-linux
+          - os: windows-latest
+            artifact_name: gremlin-windows
+          - os: macos-latest
+            artifact_name: gremlin-macos
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Install Rust
+      uses: dtolnay/rust-toolchain@stable
+      with:
+        components: clippy
+
+    - name: Test
+      run: cargo clippy -- -D warnings
+
+    - name: Build
+      run: cargo build --release --locked --verbose
+      
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.artifact_name }}
+        path: |
+          target/release/gremlin
+          target/release/gremlin.exe
+
+  release:
+    name: Create staging release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download
+        uses: actions/download-artifact@v4
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: staging-run-${{ github.run_number }}
+          name: "Staging Release (Build #${{ github.run_number}})"
+          files: |
+            gremlin/gremlin
+            gremlin-windows/gremlin.exe
+            gremlin-macos/gremlin
+          draft: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
