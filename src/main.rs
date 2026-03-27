@@ -1,3 +1,6 @@
+mod error;
+mod globals;
+
 fn main() {
-    println!("Hello, world!");
+    println!("{:?}", globals::get_config());
 }

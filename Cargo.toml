@@ -6,3 +6,4 @@ edition = "2024"
 [dependencies]
 async-std = "1.13.2"
 sqlx = { version = "0.8.6", features = ["runtime-async-std"] }
+sysdirs = "0.9.4"
