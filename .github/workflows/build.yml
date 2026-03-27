@@ -62,8 +62,8 @@ jobs:
         with:
           name: ${{ matrix.artifact_name }}
           path: |
-            target/release/gremlin
-            target/release/gremlin.exe
+            staging-release/gremlin-${{ matrix.os }}
+            staging-release/gremlin-${{ matrix.os }}.exe
 
   release:
     name: Create staging release
