@@ -80,7 +80,7 @@ jobs:
           name: "Staging Release (Build #${{ github.run_number}})"
           files: |
             gremlin-linux/gremlin-ubuntu-latest
-            gremlin-windows/gremlin-windows-lates.exe
+            gremlin-windows/gremlin-windows-latest.exe
             gremlin-macos/gremlin-macos-latest
           draft: true
         env:
