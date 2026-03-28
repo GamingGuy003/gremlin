@@ -7,4 +7,4 @@ Planned features:
   - [ ] Recurring tasks
   - [ ] Task presets (#3)
   - [ ] Cross platform (Desktop, Mobile, Possibly Web)
-
+  - [ ] Screen lock for tasks (locked until task should be over)
